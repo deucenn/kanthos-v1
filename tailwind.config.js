@@ -11,7 +11,7 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         customBlue: "#011329",
-        focsuringBlue: "#4B789D",
+        focusringBlue: "#4B789D",
       },
     },
   },
