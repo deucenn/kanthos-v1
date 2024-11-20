@@ -30,7 +30,7 @@ export default function ProductsContainer() {
   }
 
   return (
-    <div>
+    <div className="grid grid-cols-5 mt-80 h-screen">
       {products.length > 0 ? (
         products.map((product) => (
           <div key={product.id}>
@@ -50,3 +50,5 @@ export default function ProductsContainer() {
     </div>
   );
 }
+
+// UI like this https://ui.aceternity.com/components/apple-cards-carousel
