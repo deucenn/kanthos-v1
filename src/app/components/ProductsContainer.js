@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function ProductsContainer() {
   const [products, setProducts] = useState([]);
@@ -13,14 +14,16 @@ export default function ProductsContainer() {
         const res = await fetch(
           "https://kanthos-backend.onrender.com/api/products"
         );
+        if (!res.ok) throw new Error("Failed to fetch products");
         const result = await res.json();
-        // .filter for visible true
+
+        // Filter products for visible === true
         const printifyData = result.data.filter(
           (product) => product.visible === true
         );
 
-        if (printifyData?.data?.length > 0) {
-          setProducts(printifyData.data);
+        if (printifyData.length > 0) {
+          setProducts(printifyData);
         }
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -32,7 +35,7 @@ export default function ProductsContainer() {
   }, []);
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="text-center text-red-500">{error}</p>;
   }
 
   return (
@@ -43,27 +46,32 @@ export default function ProductsContainer() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.length > 0 ? (
           products.map((product) => (
-            <div
+            <a
               key={product.id}
-              className="bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition duration-200"
+              href={product.external?.handle || "#"} // Fallback to "#" if handle is undefined
+              className="block"
             >
-              <Image
-                src={product.images[0].src}
-                alt={product.title}
-                className="w-full h-48 object-cover rounded-t-lg"
-              />
-              <div className="p-4">
-                <h2 className="text-lg font-semibold text-gray-800 truncate">
-                  {product.title}
-                </h2>
-                <p className="text-gray-600 text-sm mt-1">
-                  ${product.price.toFixed(2)}
-                </p>
+              <div className="bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition duration-200 cursor-pointer">
+                <Image
+                  src={product.images[0]?.src || "/placeholder.png"}
+                  alt={product.title}
+                  width={300}
+                  height={500}
+                  className="w-full h-72 object-cover rounded-t-lg"
+                />
+                <div className="p-4">
+                  <h2 className="text-lg font-semibold text-gray-800 truncate">
+                    {product.title}
+                  </h2>
+                  <p className="text-gray-600 text-sm mt-1">
+                    ${String(product.variants[0]?.price)?.slice(0, 2) || "N/A"}
+                  </p>
+                </div>
               </div>
-            </div>
+            </a>
           ))
         ) : (
-          <p>Loading products...</p>
+          <LoadingSpinner />
         )}
       </div>
     </div>
