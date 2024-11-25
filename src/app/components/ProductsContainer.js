@@ -48,7 +48,7 @@ export default function ProductsContainer() {
           products.map((product) => (
             <a
               key={product.id}
-              href={product.external?.handle || "#"} // Fallback to "#" if handle is undefined
+              href={product.external?.handle || "#"} 
               className="block"
             >
               <div className="bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition duration-200 cursor-pointer">
@@ -64,7 +64,7 @@ export default function ProductsContainer() {
                     {product.title}
                   </h2>
                   <p className="text-gray-600 text-sm mt-1">
-                    ${String(product.variants[0]?.price)?.slice(0, 2) || "N/A"}
+                    ${String(product.variants[0]?.price)?.slice(0, -2) || "N/A"}
                   </p>
                 </div>
               </div>
