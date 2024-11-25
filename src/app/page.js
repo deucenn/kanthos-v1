@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="flex flex-col items-center justify-center py-16 ">
-        <Image src={logo} alt="logo" width={400} height={400} priority />
+        <Image src={logo} alt="logo" width={400} height={400} priority className="hover:blur-sm transition duration-500"/>
       </header>
       <main className="flex-grow flex items-center justify-center">
         <div className="flex gap-16">
