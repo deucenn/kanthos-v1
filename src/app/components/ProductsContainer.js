@@ -40,7 +40,7 @@ export default function ProductsContainer() {
 
   return (
     <div className="max-w-7xl mx-auto p-6 font-mono">
-      <h1 className="text-4xl text-center mb-8 text-slate-200 font-extralight">
+      <h1 className="text-4xl text-center mb-8 text-slate-400 font-lamebrains">
         SHOP 2024 APPAREL
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
