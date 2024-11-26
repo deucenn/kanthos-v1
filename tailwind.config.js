@@ -13,6 +13,11 @@ module.exports = {
         customBlue: "#011329",
         focusringBlue: "#4B789D",
       },
+      fontFamily: {
+        lamebrains: ["var(--font-lamebrains)"],
+        ransom: ["var(--font-ransom"],
+        blancoZero: ["var(--font-blancoZero"],
+      }
     },
   },
   plugins: [],
