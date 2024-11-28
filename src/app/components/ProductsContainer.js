@@ -11,13 +11,14 @@ export default function ProductsContainer() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        console.time("Fetching products")
         const res = await fetch(
           "https://kanthos-backend.onrender.com/api/products"
         );
+        console.timeEnd("Fetching products")
         if (!res.ok) throw new Error("Failed to fetch products");
         const result = await res.json();
 
-        // Filter products for visible === true
         const printifyData = result.data.filter(
           (product) => product.visible === true
         );
@@ -78,4 +79,3 @@ export default function ProductsContainer() {
   );
 }
 
-// UI like this https://ui.aceternity.com/components/apple-cards-carousel
