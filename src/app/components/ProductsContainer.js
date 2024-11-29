@@ -49,7 +49,7 @@ export default function ProductsContainer() {
   return (
     <div className="max-w-7xl mx-auto p-6 font-mono">
       <div className="font-sans flex justify-end items-center mb-2">
-        <button className="flex items-center gap-2  p-2 rounded-full hover:bg-slate-500 transition">
+        <button className="flex items-center gap-2  p-2 rounded-full hover:bg-slate-500 hover:animate-pulse transition">
           <ShoppingCart className="mb-0" />
           <span className="text-xl bg-slate-500 text-white h-fit rounded-xl px-2">
             {cartAmount}
@@ -83,8 +83,8 @@ export default function ProductsContainer() {
                   <p className="text-gray-600 text-sm mt-1">
                     ${String(product.variants[0]?.price)?.slice(0, -2) || "N/A"}
                   </p>
-                  <button className="text-slate-800 gap-2  p-2 rounded-full hover:bg-slate-500 transition">
-                    <AddShoppingCart onClick={addToCart}/>
+                  <button className="text-slate-800 gap-2  p-2 rounded-full hover:bg-slate-500 transition" onClick={() => addToCart(product)}>
+                    <AddShoppingCart />
                   </button>
                 </div>
               </div>
