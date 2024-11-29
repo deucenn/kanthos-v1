@@ -3,19 +3,26 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import LoadingSpinner from "./LoadingSpinner";
+import { AddShoppingCart, ShoppingCart } from "@mui/icons-material";
 
 export default function ProductsContainer() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
+  const [cartAmount, setCartAmount] = useState(0);
+
+  const addToCart = (product) => {
+    setCartAmount((prevAmount) => prevAmount + 1);
+    console.log(`Added ${product.title} to the cart.`);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        console.time("Fetching products")
+        console.time("Fetching products");
         const res = await fetch(
           "https://kanthos-backend.onrender.com/api/products"
         );
-        console.timeEnd("Fetching products")
+        console.timeEnd("Fetching products");
         if (!res.ok) throw new Error("Failed to fetch products");
         const result = await res.json();
 
@@ -41,6 +48,14 @@ export default function ProductsContainer() {
 
   return (
     <div className="max-w-7xl mx-auto p-6 font-mono">
+      <div className="font-sans flex justify-end items-center mb-2">
+        <button className="flex items-center gap-2  p-2 rounded-full hover:bg-slate-500 transition">
+          <ShoppingCart className="mb-0" />
+          <span className="text-xl bg-slate-500 text-white h-fit rounded-xl px-2">
+            {cartAmount}
+          </span>
+        </button>
+      </div>
       <h1 className="text-4xl text-center mb-8 text-slate-400 font-lamebrains">
         SHOP 2024 APPAREL
       </h1>
@@ -49,7 +64,8 @@ export default function ProductsContainer() {
           products.map((product) => (
             <a
               key={product.id}
-              href={product.external?.handle || "#"} 
+              href={product.external?.handle || "#"}
+              target="_blank"
               className="block"
             >
               <div className="bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition duration-200 cursor-pointer">
@@ -67,6 +83,9 @@ export default function ProductsContainer() {
                   <p className="text-gray-600 text-sm mt-1">
                     ${String(product.variants[0]?.price)?.slice(0, -2) || "N/A"}
                   </p>
+                  <button className="text-slate-800 gap-2  p-2 rounded-full hover:bg-slate-500 transition">
+                    <AddShoppingCart onClick={addToCart}/>
+                  </button>
                 </div>
               </div>
             </a>
@@ -78,4 +97,3 @@ export default function ProductsContainer() {
     </div>
   );
 }
-
