@@ -10,10 +10,22 @@ export default function ProductsContainer() {
   const [error, setError] = useState(null);
   const [cartAmount, setCartAmount] = useState(0);
 
+  const [shoppingCart, setShoppingCart] = useState([]);
+
   const addToCart = (product) => {
     setCartAmount((prevAmount) => prevAmount + 1);
     console.log(`Added ${product.title} to the cart.`);
+    setShoppingCart((prevCart) => [ ...prevCart, {
+      id: product.id, 
+      title: product.title, 
+      price: product.variants[0]?.price, 
+      image: product.images[0]?.src,
+    }]);
   };
+
+  useEffect(() => {
+    console.log("Shopping Cart updated:", shoppingCart);
+  }, [shoppingCart]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -83,7 +95,10 @@ export default function ProductsContainer() {
                   <p className="text-gray-600 text-sm mt-1">
                     ${String(product.variants[0]?.price)?.slice(0, -2) || "N/A"}
                   </p>
-                  <button className="text-slate-800 gap-2  p-2 rounded-full hover:bg-slate-500 transition" onClick={() => addToCart(product)}>
+                  <button
+                    className="text-slate-800 gap-2  p-2 rounded-full hover:bg-slate-500 transition"
+                    onClick={() => addToCart(product)}
+                  >
                     <AddShoppingCart />
                   </button>
                 </div>
